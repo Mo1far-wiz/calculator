@@ -1,0 +1,19 @@
+// Define the grammar for the calculator
+WHITESPACE = _{ " " | "\t" | "\n" }
+
+integer = @{ ASCII_DIGIT+ }
+
+add = { "+" }
+subtract = { "-" }
+multiply = { "*" }
+divide = { "/" }
+unary_minus = { "-" }
+
+bin_op = _{ add | subtract | multiply | divide }
+
+primary = _{ integer | "(" ~ expr ~ ")" }
+atom = _{ unary_minus? ~ primary }
+
+expr = { atom ~ (bin_op ~ atom)* }
+
+equation = _{ SOI ~ expr ~ EOI }
